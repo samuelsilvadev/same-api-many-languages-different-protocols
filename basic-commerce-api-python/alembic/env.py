@@ -68,7 +68,7 @@ def run_migrations_online() -> None:
     if not alembic_config:
         raise Exception("Could not find alembic config.")
 
-    alembic_config['sqlalchemy.url'] = config_instance.DATABASE_URL
+    alembic_config["sqlalchemy.url"] = config_instance.DATABASE_URL
 
     connectable = engine_from_config(
         alembic_config,
