@@ -1,4 +1,3 @@
-import src.initializers as initializers
 from fastapi import FastAPI, Request
 from .config import config_instance
 

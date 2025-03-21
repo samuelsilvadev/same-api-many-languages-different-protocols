@@ -9,3 +9,17 @@
 ```shell
     uv run ruff format
 ```
+
+### Migration
+
+#### Create migration
+
+```shell
+  uv run alembic revision --autogenerate -m "your amazing message"
+```
+
+#### Run migration
+
+```shell
+  uv run alembic upgrade head
+```
