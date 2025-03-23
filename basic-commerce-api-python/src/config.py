@@ -1,8 +1,8 @@
+from typing import List
 from pydantic import BaseSettings, Field
 import os
 import logging
 from logging.handlers import RotatingFileHandler
-from cgi import log
 
 
 def get_database_url():
@@ -11,6 +11,7 @@ def get_database_url():
 
 class Config(BaseSettings):
     DATABASE_URL: str = Field(...)
+    ALLOWED_ORIGINS: List = Field(...)
 
 
 class Logger:
@@ -40,5 +41,5 @@ class Logger:
         self.logger.addHandler(file_handler)
 
 
-config_instance = Config(DATABASE_URL=get_database_url())
+config_instance = Config(DATABASE_URL=get_database_url(), ALLOWED_ORIGINS=["http://localhost:8080"])
 logging_instance = Logger().logger

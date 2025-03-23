@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.db import Base, engine
 from src.routes import users_routes
@@ -25,3 +26,11 @@ async def startup():
 
 
 app.include_router(users_routes.router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=config_instance.ALLOWED_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "DELETE"],
+    allow_headers=["*"],
+)
