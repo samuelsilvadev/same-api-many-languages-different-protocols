@@ -21,6 +21,10 @@ def get_user_by_id(db: Session, id: int):
     return db.query(models.User).filter(models.User.id == id).first()
 
 
+def get_all_users(db: Session):
+    return db.query(models.User).all()
+
+
 def delete_user(db: Session, user):
     db.delete(user)
     db.commit()
