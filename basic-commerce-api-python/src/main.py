@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 
 from src.db import Base, engine
+from src.routes import users_routes
 from .config import config_instance
 from src.config import logging_instance
 
@@ -21,3 +22,6 @@ async def health():
 async def startup():
     Base.metadata.create_all(bind=engine)
     logging_instance.info("Tables created")
+
+
+app.include_router(users_routes.router)
