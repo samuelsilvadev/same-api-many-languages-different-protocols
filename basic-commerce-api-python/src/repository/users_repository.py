@@ -19,3 +19,8 @@ def create_user(db: Session, body: CreateUserPayload):
 
 def get_user_by_id(db: Session, id: int):
     return db.query(models.User).filter(models.User.id == id).first()
+
+
+def delete_user(db: Session, user):
+    db.delete(user)
+    db.commit()

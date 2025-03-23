@@ -46,3 +46,23 @@ async def save_user(body: CreateUserPayload, db: Session = Depends(get_session))
         traceback.print_exc()
         logging_instance.error(error)
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+
+
+@router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_user(id: int, db: Session = Depends(get_session)):
+    try:
+        user_to_delete = users_repository.get_user_by_id(db, id)
+
+        if user_to_delete is None:
+            logging_instance.info(f"User with {id} does not exist")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+
+        users_repository.delete_user(db, user_to_delete)
+    except Exception as error:
+        traceback.print_exc()
+        logging_instance.error(error)
+
+        if isinstance(error, HTTPException):
+            raise error
+
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
