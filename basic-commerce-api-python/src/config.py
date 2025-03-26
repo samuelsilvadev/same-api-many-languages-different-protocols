@@ -41,5 +41,7 @@ class Logger:
         self.logger.addHandler(file_handler)
 
 
-config_instance = Config(DATABASE_URL=get_database_url(), ALLOWED_ORIGINS=["http://localhost:8080"])
+config_instance = Config(
+    DATABASE_URL=get_database_url(), ALLOWED_ORIGINS=["http://localhost:8080"]
+)
 logging_instance = Logger().logger
