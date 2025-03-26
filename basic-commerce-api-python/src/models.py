@@ -1,3 +1,5 @@
+from datetime import datetime
+from sqlalchemy import ForeignKey, DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 from .db import Base
 
@@ -18,3 +20,13 @@ class Product(Base):
     name: Mapped[str] = mapped_column()
     price: Mapped[float] = mapped_column()
     amount: Mapped[int] = mapped_column()
+
+
+class Order(Base):
+    __tablename__ = "orders"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=datetime.utcnow, nullable=False
+    )
