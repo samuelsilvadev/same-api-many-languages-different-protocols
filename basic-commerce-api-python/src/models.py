@@ -30,3 +30,12 @@ class Order(Base):
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=datetime.utcnow, nullable=False
     )
+
+
+class OrderProduct(Base):
+    __tablename__ = "orders_products"
+
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"), nullable=False)
+    product_id: Mapped[int] = mapped_column(ForeignKey("products.id"), nullable=False)
+    price: Mapped[float] = mapped_column()
