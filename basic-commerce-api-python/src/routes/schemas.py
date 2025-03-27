@@ -19,3 +19,20 @@ class CreateUserResponse(BaseUser):
 
 class GetUserResponse(BaseUser):
     id: int
+
+
+class BaseProduct(BaseModel):
+    name: str
+    price: float
+    amount: int
+
+    class Config:
+        orm_mode = True
+
+
+class CreateProductPayload(BaseProduct):
+    pass
+
+
+class CreateProductResponse(BaseProduct):
+    id: int

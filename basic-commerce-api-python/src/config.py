@@ -12,6 +12,8 @@ def get_database_url():
 class Config(BaseSettings):
     DATABASE_URL: str = Field(...)
     ALLOWED_ORIGINS: List = Field(...)
+    SECRET_KEY: str = Field(...)
+    API_KEY: str = Field(...)
 
 
 class Logger:
@@ -42,6 +44,10 @@ class Logger:
 
 
 config_instance = Config(
-    DATABASE_URL=get_database_url(), ALLOWED_ORIGINS=["http://localhost:8080"]
+    DATABASE_URL=get_database_url(),
+    ALLOWED_ORIGINS=["http://localhost:8080"],
+    API_KEY=os.getenv("API_KEY") or "__INVALID_API_KEY__",
+    SECRET_KEY=os.getenv("SECRET_KEY") or "__INVALID_SECRET_KEY__",
 )
+
 logging_instance = Logger().logger
