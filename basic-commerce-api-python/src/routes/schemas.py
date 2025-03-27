@@ -36,3 +36,7 @@ class CreateProductPayload(BaseProduct):
 
 class CreateProductResponse(BaseProduct):
     id: int
+
+
+class ProductResponse(BaseProduct):
+    id: int

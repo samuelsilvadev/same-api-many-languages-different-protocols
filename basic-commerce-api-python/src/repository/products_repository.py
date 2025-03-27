@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 import src.models as models
 from src.routes.schemas import CreateProductPayload
+from src.config import log_sql
 
 
 def create_product(db: Session, body: CreateProductPayload):
@@ -11,3 +12,15 @@ def create_product(db: Session, body: CreateProductPayload):
     db.refresh(new_product)
 
     return new_product
+
+
+def get_product_by_id(db: Session, id: int):
+    query = db.query(models.Product).filter(models.Product.id == id)
+
+    log_sql(query)
+
+    return query.first()
+
+
+def get_all_products(db: Session):
+    return db.query(models.Product).all()
