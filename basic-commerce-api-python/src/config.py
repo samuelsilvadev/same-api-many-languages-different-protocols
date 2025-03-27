@@ -3,6 +3,7 @@ from pydantic import BaseSettings, Field
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+import inspect
 
 
 def get_database_url():
@@ -51,3 +52,8 @@ config_instance = Config(
 )
 
 logging_instance = Logger().logger
+
+
+def log_sql(query):
+    caller_name = inspect.stack()[1].function
+    logging_instance.info(f"{caller_name} -> {str(query)}")
