@@ -1,3 +1,5 @@
+from typing import List, Optional
+from datetime import datetime
 from pydantic import BaseModel, EmailStr
 
 
@@ -40,3 +42,28 @@ class CreateProductResponse(BaseProduct):
 
 class ProductResponse(BaseProduct):
     id: int
+
+
+class OrderProduct(BaseModel):
+    product_id: int
+    price: float
+
+
+class BaseOrder(BaseModel):
+    order_id: Optional[int] = None
+    user_id: int
+    products: List[OrderProduct]
+
+
+class CreateOrderPayload(BaseOrder):
+    pass
+
+
+class NewOrder(BaseModel):
+    id: int
+    created_at: datetime
+
+
+class CreateOrderAndProdcutsResponse(BaseModel):
+    order: NewOrder
+    products: List[OrderProduct]

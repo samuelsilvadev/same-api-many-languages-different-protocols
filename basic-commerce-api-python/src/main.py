@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.db import Base, engine
-from src.routes import users_routes, products_routes
+from src.routes import users_routes, products_routes, orders_routes
 from .config import config_instance
 from src.config import logging_instance
 
@@ -27,6 +27,7 @@ async def startup():
 
 app.include_router(users_routes.router)
 app.include_router(products_routes.router)
+app.include_router(orders_routes.router)
 
 app.add_middleware(
     CORSMiddleware,
