@@ -67,3 +67,17 @@ class NewOrder(BaseModel):
 class CreateOrderAndProdcutsResponse(BaseModel):
     order: NewOrder
     products: List[OrderProduct]
+
+
+class UpdateOrderPayload(BaseModel):
+    order_id: int
+    user_id: int
+    products: List[OrderProduct]
+
+class UpdatedOrder(BaseModel):
+    id: int
+    updated_at: datetime
+
+class UpdatedOrderAndProductsResponse(BaseModel):
+    order: UpdatedOrder
+    products: List[OrderProduct]

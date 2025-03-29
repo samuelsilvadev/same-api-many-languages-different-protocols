@@ -1,7 +1,6 @@
 from typing import List
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, HTTPException, status, Depends
-from starlette.status import HTTP_400_BAD_REQUEST
 from src.db import get_session
 from src.routes.schemas import CreateUserPayload, GetUserResponse
 from src.config import logging_instance
@@ -22,7 +21,7 @@ async def get_all_users(db: Session = Depends(get_session)):
         traceback.print_exc()
         logging_instance.error(error)
 
-        return HTTPException(status_code=HTTP_400_BAD_REQUEST)
+        return HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
 
 @router.get("/{id}", response_model=GetUserResponse, status_code=status.HTTP_200_OK)
