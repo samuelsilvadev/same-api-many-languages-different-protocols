@@ -6,6 +6,7 @@ from src.routes.schemas import CreateUserPayload, CreateUserResponse, GetUserRes
 
 from src.db import get_session
 from src.repository import users_repository
+from src.config import logging_instance
 
 
 @strawberry.type
@@ -45,6 +46,24 @@ class Mutation:
         return CreateUserResponse(
             id=new_user.id, name=new_user.name, email=new_user.email
         )
+
+    @strawberry.mutation
+    async def delete_user(self, id: int) -> None:
+        db = get_session()
+        user_to_delete = users_repository.get_user_by_id(db, id)
+
+        if user_to_delete is None:
+            raise Exception("User not found")
+
+        try:
+            users_repository.delete_user(db, user_to_delete)
+        except Exception as error:
+            logging_instance.error(error)
+
+            if isinstance(error, Exception):
+                raise error
+
+            raise Exception("Failed to delete user")
 
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
