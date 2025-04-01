@@ -31,7 +31,23 @@ class Query:
         return GetUserResponse(id=user.id, name=user.name, email=user.email)
 
 
-schema = strawberry.Schema(query=Query)
+@strawberry.type
+class Mutation:
+    @strawberry.mutation
+    async def create_user(
+        self, name: str, email: str, password: str
+    ) -> CreateUserResponse:
+        db = get_session()
+        new_user = users_repository.create_user(
+            db, CreateUserPayload(name=name, email=email, password=password)
+        )
+
+        return CreateUserResponse(
+            id=new_user.id, name=new_user.name, email=new_user.email
+        )
+
+
+schema = strawberry.Schema(query=Query, mutation=Mutation)
 
 
 router = APIRouter()

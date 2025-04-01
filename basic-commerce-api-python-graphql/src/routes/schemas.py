@@ -1,11 +1,10 @@
 import strawberry
-from typing import List, Optional, NewType, cast
+from typing import List, Optional
 from datetime import datetime
-from pydantic import BaseModel, EmailStr
 
 
 @strawberry.type
-class BaseUser(BaseModel):
+class BaseUser:
     name: str
     email: str
 
@@ -28,7 +27,8 @@ class GetUserResponse(BaseUser):
     id: int
 
 
-class BaseProduct(BaseModel):
+@strawberry.type
+class BaseProduct:
     name: str
     price: float
     amount: int
@@ -37,54 +37,65 @@ class BaseProduct(BaseModel):
         orm_mode = True
 
 
+@strawberry.type
 class CreateProductPayload(BaseProduct):
     pass
 
 
+@strawberry.type
 class CreateProductResponse(BaseProduct):
     id: int
 
 
+@strawberry.type
 class ProductResponse(BaseProduct):
     id: int
 
 
-class OrderProduct(BaseModel):
+@strawberry.type
+class OrderProduct:
     product_id: int
     price: float
 
 
-class BaseOrder(BaseModel):
+@strawberry.type
+class BaseOrder:
     order_id: Optional[int] = None
     user_id: int
     products: List[OrderProduct]
 
 
+@strawberry.type
 class CreateOrderPayload(BaseOrder):
     pass
 
 
-class NewOrder(BaseModel):
+@strawberry.type
+class NewOrder:
     id: int
     created_at: datetime
 
 
-class CreateOrderAndProdcutsResponse(BaseModel):
+@strawberry.type
+class CreateOrderAndProdcutsResponse:
     order: NewOrder
     products: List[OrderProduct]
 
 
-class UpdateOrderPayload(BaseModel):
+@strawberry.type
+class UpdateOrderPayload:
     order_id: int
     user_id: int
     products: List[OrderProduct]
 
 
-class UpdatedOrder(BaseModel):
+@strawberry.type
+class UpdatedOrder:
     id: int
     updated_at: datetime
 
 
-class UpdatedOrderAndProductsResponse(BaseModel):
+@strawberry.type
+class UpdatedOrderAndProductsResponse:
     order: UpdatedOrder
     products: List[OrderProduct]
